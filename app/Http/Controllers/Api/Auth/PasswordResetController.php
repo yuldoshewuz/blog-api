@@ -30,11 +30,12 @@ class PasswordResetController extends BaseController
             'password' => 'required|confirmed|min:8',
         ]);
 
-        $status = Password::reset(
+        $status = Password::broker()->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
-                $user->forceFill(['password' => Hash::make($password)])
-                    ->setRememberToken(Str::random(60))->save();
+                $user->password = Hash::make($password);
+                $user->setRememberToken(Str::random(60));
+                $user->save();
                 event(new PasswordReset($user));
             }
         );

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-        User::factory(10)->create();
+        // User::factory(10)->create();
 
         $this->call([
             CategorySeeder::class,

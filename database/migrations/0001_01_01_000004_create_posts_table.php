@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('body');
             $table->string('image')->nullable();
             $table->enum('status', ['draft', 'published'])->default('published');
+            $table->unsignedBigInteger('views_count')->default(0);
             $table->timestamps();
         });
     }

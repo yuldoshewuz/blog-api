@@ -80,6 +80,8 @@ class PostController extends BaseController
 
     public function show(Post $post)
     {
+        $post->increment('views_count');
+
         return $this->sendResponse($post->load(['user', 'category', 'comments']), 'Post details retrieved.');
     }
 

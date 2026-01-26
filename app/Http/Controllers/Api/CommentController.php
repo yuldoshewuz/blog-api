@@ -2,28 +2,26 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class CommentController extends Controller
+class CommentController extends BaseController
 {
     use AuthorizesRequests;
 
-    public function index($postId)
+    public function index(Request $request, $postId)
     {
+        $perPage = $request->query('per_page', 10);
+
         $comments = Comment::where('post_id', $postId)
             ->with('user:id,name')
             ->latest()
-            ->get();
+            ->paginate($perPage);
 
-        return response()->json([
-            'success' => true,
-            'data' => $comments
-        ]);
+        return $this->sendResponse($comments, 'Comments retrieved successfully.');
     }
 
     public function store(Request $request, $postId)
@@ -33,11 +31,11 @@ class CommentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
         if (!Post::where('id', $postId)->exists()) {
-            return response()->json(['message' => 'Post not found'], 404);
+            return $this->sendError('Post not found.', [], 404);
         }
 
         $comment = Comment::create([
@@ -46,10 +44,7 @@ class CommentController extends Controller
             'body' => $request->body,
         ]);
 
-        return response()->json([
-            'message' => 'Comment added successfully',
-            'data' => $comment->load('user:id,name')
-        ], 201);
+        return $this->sendResponse($comment->load('user:id,name'), 'Comment added successfully.', 201);
     }
 
     public function update(Request $request, Comment $comment)
@@ -61,15 +56,12 @@ class CommentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
         $comment->update(['body' => $request->body]);
 
-        return response()->json([
-            'message' => 'Comment updated successfully',
-            'data' => $comment
-        ]);
+        return $this->sendResponse($comment, 'Comment updated successfully.');
     }
 
     public function destroy(Comment $comment)
@@ -78,6 +70,6 @@ class CommentController extends Controller
 
         $comment->delete();
 
-        return response()->json(['message' => 'Comment deleted successfully']);
+        return $this->sendResponse([], 'Comment deleted successfully.');
     }
 }

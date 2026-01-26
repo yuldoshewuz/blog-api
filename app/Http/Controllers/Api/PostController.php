@@ -13,21 +13,25 @@ class PostController extends BaseController
 {
     use AuthorizesRequests;
 
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->query('per_page', 10);
+
         $posts = Post::with(['user:id,name,email', 'category:id,name,slug'])
             ->where('status', 'published')
             ->latest()
-            ->get();
+            ->paginate($perPage);
 
         return $this->sendResponse($posts, 'Posts retrieved successfully.');
     }
 
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
+        $perPage = $request->query('per_page', 10);
+
         $posts = Post::with(['user:id,name,email', 'category:id,name,slug'])
             ->latest()
-            ->get();
+            ->paginate($perPage);
 
         return $this->sendResponse($posts, 'All posts for administration.');
     }

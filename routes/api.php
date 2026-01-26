@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,7 @@ Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name(
 
 Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
 Route::apiResource('posts', PostController::class)->only(['index', 'show']);
+Route::get('posts/{postId}/comments', [CommentController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -27,6 +29,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('verified')->group(function () {
         Route::put('/user/password-update', [AuthController::class, 'updatePassword']);
         Route::delete('/user/delete', [AuthController::class, 'destroy']);
+
+        Route::post('posts/{postId}/comments', [CommentController::class, 'store']);
+        Route::put('comments/{comment}', [CommentController::class, 'update']);
+        Route::delete('comments/{comment}', [CommentController::class, 'destroy']);
 
         Route::middleware('admin')->group(function () {
             Route::get('/users-list', [AuthController::class, 'index']);

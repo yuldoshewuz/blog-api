@@ -13,13 +13,13 @@ class PostFactory extends Factory
     {
         $title = $this->faker->sentence(rand(6, 10));
         return [
-            'user_id' => User::where('role', 'admin')->first()->id ?? User::factory(),
+            'user_id' => User::where('role', 'admin')->first()->id,
             'category_id' => Category::inRandomOrder()->first()->id,
             'title' => $title,
             'slug' => Str::slug($title),
             'body' => $this->faker->paragraphs(5, true),
-            'image' => 'https://source.unsplash.com/featured/800x600?nature,water,' . rand(1, 1000),
-            'status' => 'published',
+            'image' => 'no-image.png',
+            'status' => $this->faker->randomElement(['published', 'draft']),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }

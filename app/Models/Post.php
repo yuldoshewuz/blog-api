@@ -7,6 +7,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -14,10 +16,27 @@ class Post extends Model
 
     protected $fillable = ['user_id', 'category_id', 'title', 'slug', 'body', 'image', 'status'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($post) {
+            if (empty($post->slug)) {
+                $post->slug = Str::slug($post->title);
+            }
+        });
+    }
+
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $value ?? 'https://via.placeholder.com/800x600.png?text=No+Featured+Image',
+            get: function ($value) {
+                if ($value && Storage::disk('public')->exists($value)) {
+                    return asset('storage/' . $value);
+                }
+
+                return asset('storage/no-image.png');
+            }
         );
     }
 

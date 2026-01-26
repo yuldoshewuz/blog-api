@@ -14,6 +14,11 @@ class PostSeeder extends Seeder
     {
         $admin = User::where('role', 'admin')->first();
 
+        if (!$admin) {
+            $this->command->info('Admin user not found. Creating a temporary admin.');
+            $admin = User::factory()->create(['role' => 'admin']);
+        }
+
         $articles = [
             [
                 'title' => 'The Future of Quantum Computing in 2026',
@@ -43,15 +48,20 @@ class PostSeeder extends Seeder
         ];
 
         foreach ($articles as $article) {
-            $category = Category::where('name', $article['category'])->first();
+            $category = Category::where('name', $article['category'])->first()
+                ?? Category::inRandomOrder()->first();
+
+            if (!$category) {
+                $category = Category::create(['name' => $article['category'], 'slug' => Str::slug($article['category'])]);
+            }
 
             Post::create([
                 'user_id' => $admin->id,
-                'category_id' => $category->id ?? Category::inRandomOrder()->first()->id,
+                'category_id' => $category->id,
                 'title' => $article['title'],
                 'slug' => Str::slug($article['title']),
                 'body' => $article['body'] . "\n\n" . str_repeat("Lorem ipsum dolor sit amet, consectetur adipiscing elit. ", 10),
-                'image' => 'https://picsum.photos/seed/' . Str::slug($article['title']) . '/800/600',
+                'image' => 'no-image.png',
                 'status' => 'published',
             ]);
         }

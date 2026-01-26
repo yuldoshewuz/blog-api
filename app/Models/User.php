@@ -15,11 +15,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $fillable = ['name', 'email', 'password', 'role'];
 
-    public function sendEmailVerificationNotification()
-    {
-        $this->notify(new VerifyEmail());
-    }
-
     public function posts()
     {
         return $this->hasMany(Post::class);

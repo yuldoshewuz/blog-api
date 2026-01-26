@@ -6,9 +6,13 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Str;
 
 class PostController extends BaseController
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         $posts = Post::with(['user:id,name,email', 'category:id,name,slug'])
@@ -61,6 +65,8 @@ class PostController extends BaseController
 
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $validator = Validator::make($request->all(), [
             'category_id' => 'sometimes|exists:categories,id',
             'title'       => 'sometimes|string|max:255',
@@ -70,10 +76,14 @@ class PostController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
         $data = $request->all();
+
+        if ($request->has('title')) {
+            $data['slug'] = Str::slug($request->title);
+        }
 
         if ($request->hasFile('image')) {
             if ($post->getRawOriginal('image')) {
@@ -89,6 +99,8 @@ class PostController extends BaseController
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         if ($post->getRawOriginal('image')) {
             Storage::disk('public')->delete($post->getRawOriginal('image'));
         }

@@ -27,6 +27,9 @@ class PostController extends BaseController
                         ->orWhere('body', 'like', "%{$search}%");
                 });
             })
+            ->when($request->category_id, function ($query, $catId) {
+                $query->where('category_id', $catId);
+            })
             ->latest()
             ->paginate($perPage);
 
@@ -45,6 +48,9 @@ class PostController extends BaseController
                     $q->where('title', 'like', "%{$search}%")
                         ->orWhere('body', 'like', "%{$search}%");
                 });
+            })
+            ->when($request->category_id, function ($query, $catId) {
+                $query->where('category_id', $catId);
             })
             ->latest()
             ->paginate($perPage);

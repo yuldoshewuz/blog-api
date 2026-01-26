@@ -16,10 +16,17 @@ class PostController extends BaseController
     public function index(Request $request)
     {
         $perPage = $request->query('per_page', 10);
+        $search = $request->query('search');
 
         $posts = Post::with(['user:id,name', 'category:id,name'])
             ->withCount('likes')
             ->where('status', 'published')
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('body', 'like', "%{$search}%");
+                });
+            })
             ->latest()
             ->paginate($perPage);
 
@@ -29,9 +36,16 @@ class PostController extends BaseController
     public function adminIndex(Request $request)
     {
         $perPage = $request->query('per_page', 10);
+        $search = $request->query('search');
 
         $posts = Post::with(['user:id,name', 'category:id,name'])
             ->withCount('likes')
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('body', 'like', "%{$search}%");
+                });
+            })
             ->latest()
             ->paginate($perPage);
 

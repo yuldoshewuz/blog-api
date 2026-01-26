@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\CategoryController;
@@ -33,6 +34,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('posts/{postId}/comments', [CommentController::class, 'store']);
         Route::put('comments/{comment}', [CommentController::class, 'update']);
         Route::delete('comments/{comment}', [CommentController::class, 'destroy']);
+        Route::get('my-favorites', [LikeController::class, 'myLikedPosts']); // Sevimli postlar
+        Route::post('posts/{post}/like', [LikeController::class, 'toggle']);
 
         Route::middleware('admin')->group(function () {
             Route::get('/users-list', [AuthController::class, 'index']);

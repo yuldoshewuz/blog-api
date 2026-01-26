@@ -17,7 +17,8 @@ class PostController extends BaseController
     {
         $perPage = $request->query('per_page', 10);
 
-        $posts = Post::with(['user:id,name,email', 'category:id,name,slug'])
+        $posts = Post::with(['user:id,name', 'category:id,name'])
+            ->withCount('likes')
             ->where('status', 'published')
             ->latest()
             ->paginate($perPage);
@@ -29,7 +30,8 @@ class PostController extends BaseController
     {
         $perPage = $request->query('per_page', 10);
 
-        $posts = Post::with(['user:id,name,email', 'category:id,name,slug'])
+        $posts = Post::with(['user:id,name', 'category:id,name'])
+            ->withCount('likes')
             ->latest()
             ->paginate($perPage);
 
@@ -40,10 +42,10 @@ class PostController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'category_id' => 'required|exists:categories,id',
-            'title'       => 'required|string|max:255',
-            'body'        => 'required|string',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
-            'status'      => 'nullable|in:draft,published'
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
+            'status' => 'nullable|in:draft,published'
         ]);
 
         if ($validator->fails()) {
@@ -73,10 +75,10 @@ class PostController extends BaseController
 
         $validator = Validator::make($request->all(), [
             'category_id' => 'sometimes|exists:categories,id',
-            'title'       => 'sometimes|string|max:255',
-            'body'        => 'sometimes|string',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
-            'status'      => 'sometimes|in:draft,published'
+            'title' => 'sometimes|string|max:255',
+            'body' => 'sometimes|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
+            'status' => 'sometimes|in:draft,published'
         ]);
 
         if ($validator->fails()) {

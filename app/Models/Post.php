@@ -54,4 +54,17 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    protected $appends = ['is_liked'];
+
+    public function getIsLikedAttribute()
+    {
+        if (!auth('sanctum')->check()) return false;
+        return $this->likes()->where('user_id', auth('sanctum')->id())->exists();
+    }
 }

@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
             Route::apiResource('categories', CategoryController::class)->except(['index', 'show']);
             Route::apiResource('posts', PostController::class)->except(['index', 'show']);
-            Route::get('posts/all', [PostController::class, 'adminIndex']);
+            Route::get('posts_all', [PostController::class, 'adminIndex']);
         });
     });
 });

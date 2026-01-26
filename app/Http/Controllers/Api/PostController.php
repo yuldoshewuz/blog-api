@@ -11,7 +11,7 @@ class PostController extends BaseController
 {
     public function index()
     {
-        $posts = Post::with(['user:id,name', 'category:id,name'])
+        $posts = Post::with(['user:id,name,email', 'category:id,name,slug'])
             ->where('status', 'published')
             ->latest()
             ->get();
@@ -21,7 +21,7 @@ class PostController extends BaseController
 
     public function adminIndex()
     {
-        $posts = Post::with(['user:id,name', 'category:id,name'])
+        $posts = Post::with(['user:id,name,email', 'category:id,name,slug'])
             ->latest()
             ->get();
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink']);
 Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.reset');
+
+Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -23,8 +26,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/user/password-update', [AuthController::class, 'updatePassword']);
         Route::delete('/user/delete', [AuthController::class, 'destroy']);
 
-        Route::middleware('admin')->prefix('admin')->group(function () {
+        Route::middleware('admin')->group(function () {
             Route::get('/users-list', [AuthController::class, 'index']);
+
+            Route::apiResource('categories', CategoryController::class)->except(['index', 'show']);
         });
     });
 });

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -20,8 +21,8 @@ class Category extends Model
     {
         parent::boot();
 
-        static::creating(function ($category) {
-            if (empty($category->slug)) {
+        static::saving(function ($category) {
+            if ($category->isDirty('name')) {
                 $category->slug = Str::slug($category->name);
             }
         });

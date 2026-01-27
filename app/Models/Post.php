@@ -67,4 +67,9 @@ class Post extends Model
         if (!auth('sanctum')->check()) return false;
         return $this->likes()->where('user_id', auth('sanctum')->id())->exists();
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

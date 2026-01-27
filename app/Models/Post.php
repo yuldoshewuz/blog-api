@@ -35,7 +35,7 @@ class Post extends Model
                     return asset('storage/' . $value);
                 }
 
-                return asset('storage/no-image.png');
+                return asset('no-image.png');
             }
         );
     }

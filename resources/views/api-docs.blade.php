@@ -312,14 +312,76 @@
             <div class="flex flex-wrap gap-3 mb-8">
                 <a href="https://github.com/yuldoshewuz/blog-api" target="_blank"
                    class="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-md text-sm font-medium hover:bg-gray-800 transition-all shadow-sm">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
                     GitHub
                 </a>
                 <a href="https://yuldoshew.uz" target="_blank"
                    class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-md text-sm font-medium hover:border-indigo-500 hover:text-indigo-600 transition-all shadow-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
                     Developer
                 </a>
+            </div>
+
+            <div class="mb-8 p-5 bg-indigo-50 border border-indigo-100 rounded-xl shadow-sm">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="p-1.5 bg-indigo-500 rounded-lg">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-sm font-bold text-indigo-900 uppercase tracking-tight">Database Seeded Accounts</h3>
+                </div>
+
+                <p class="text-xs text-indigo-700/80 mb-4 leading-relaxed">
+                    After running <code class="bg-indigo-200/50 px-1 rounded text-indigo-800 font-bold">php artisan
+                        migrate --seed</code>,
+                    you can use these pre-defined accounts to test the API permissions and features.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div
+                        class="bg-white/60 p-4 rounded-lg border border-indigo-200/50 hover:bg-white transition-colors">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                            <span
+                                class="text-[10px] font-black text-red-600 uppercase tracking-tighter">Admin Access</span>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-[13px] font-mono text-gray-700 flex justify-between">
+                                <span class="text-gray-400">Email:</span> <span
+                                    class="font-bold">admin@example.com</span>
+                            </p>
+                            <p class="text-[13px] font-mono text-gray-700 flex justify-between">
+                                <span class="text-gray-400">Pass:</span> <span class="font-bold italic text-indigo-600">password</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white/60 p-4 rounded-lg border border-indigo-200/50 hover:bg-white transition-colors">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span
+                                class="text-[10px] font-black text-emerald-600 uppercase tracking-tighter">User Access</span>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-[13px] font-mono text-gray-700 flex justify-between">
+                                <span class="text-gray-400">Email:</span> <span
+                                    class="font-bold">user@example.com</span>
+                            </p>
+                            <p class="text-[13px] font-mono text-gray-700 flex justify-between">
+                                <span class="text-gray-400">Pass:</span> <span class="font-bold italic text-indigo-600">password</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
@@ -328,9 +390,10 @@
             </div>
 
             <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                <h3 class="text-sm font-bold text-gray-800 mb-2 font-sans">Standard Response Format</h3>
-                <p class="text-xs text-gray-500 mb-3 italic underline-offset-4 decoration-gray-200">Used by <code>BaseController</code></p>
-                <pre class="bg-slate-50 p-4 rounded text-[11px] text-slate-700 border border-slate-100 overflow-x-auto font-mono leading-relaxed">{
+                <h3 class="text-sm font-bold text-gray-800 mb-2">Standard Response Format</h3>
+                <p class="text-xs text-gray-500 mb-3 italic">Used by <code>BaseController</code></p>
+                <pre
+                    class="bg-slate-50 p-4 rounded text-[11px] text-slate-700 border border-slate-100 overflow-x-auto font-mono leading-relaxed">{
   <span class="text-indigo-600">"status"</span>: <span class="text-emerald-600">"success"</span>,
   <span class="text-indigo-600">"status_code"</span>: <span class="text-blue-600">200</span>,
   <span class="text-indigo-600">"message"</span>: <span class="text-emerald-600">"Operation successful."</span>,
@@ -339,8 +402,7 @@
 }</pre>
             </div>
         </div>
-        <div class="api-code hidden lg:block border-l border-gray-50">
-        </div>
+        <div class="api-code hidden lg:block border-l border-gray-50"></div>
     </section>
 
     <section id="register" class="api-section">

@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('posts/{postId}/comments', [CommentController::class, 'store']);
         Route::put('comments/{comment}', [CommentController::class, 'update']);
         Route::delete('comments/{comment}', [CommentController::class, 'destroy']);
-        Route::get('my-favorites', [LikeController::class, 'myLikedPosts']); // Sevimli postlar
+        Route::get('my-favorites', [LikeController::class, 'myLikedPosts']);
         Route::post('posts/{post}/like', [LikeController::class, 'toggle']);
 
         Route::middleware('admin')->group(function () {

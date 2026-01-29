@@ -84,15 +84,33 @@ class PostController extends BaseController
         return $this->sendResponse($post, 'Post created successfully.', 201);
     }
 
-    public function show(Post $post)
+    public function show($post)
     {
+        $post = Post::find($post);
+
+        if (!$post) {
+            return response()->json([
+                'status' => "error",
+                'message' => "Post not found!",
+            ], 404);
+        }
+
         $post->increment('views_count');
 
         return $this->sendResponse($post->load(['user', 'category', 'comments']), 'Post details retrieved.');
     }
 
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $post)
     {
+        $post = Post::find($post);
+
+        if (!$post) {
+            return response()->json([
+                'status' => "error",
+                'message' => "Post not found!",
+            ], 404);
+        }
+
         $this->authorize('update', $post);
 
         $validator = Validator::make($request->all(), [
@@ -125,8 +143,17 @@ class PostController extends BaseController
         return $this->sendResponse($post, 'Post updated successfully.');
     }
 
-    public function destroy(Post $post)
+    public function destroy($post)
     {
+        $post = Post::find($post);
+
+        if (!$post) {
+            return response()->json([
+                'status' => "error",
+                'message' => "Post not found!",
+            ], 404);
+        }
+
         $this->authorize('delete', $post);
 
         if ($post->getRawOriginal('image')) {

@@ -14,7 +14,7 @@ class LikeController extends BaseController
 
         if (!$post) {
             return response()->json([
-                'success' => false,
+                'status' => "error",
                 'message' => "Post not found!",
             ], 404);
         }

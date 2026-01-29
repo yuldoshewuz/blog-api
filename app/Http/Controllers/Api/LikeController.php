@@ -8,8 +8,17 @@ use Illuminate\Http\Request;
 
 class LikeController extends BaseController
 {
-    public function toggle(Post $post)
+    public function toggle($post)
     {
+        $post = Post::find($post);
+
+        if (!$post) {
+            return response()->json([
+                'success' => false,
+                'message' => "Post not found!",
+            ], 404);
+        }
+
         $userId = auth()->id();
         $existingLike = Like::where('user_id', $userId)->where('post_id', $post->id)->first();
 
